@@ -10,9 +10,17 @@ export function Routes() {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{headerShown: false}}>
-                <Stack.Screen name='Splash' component={Splash} />
-                <Stack.Screen name='Home' component={Home} />
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen
+                    name='Splash'
+                    component={Splash}
+                    options={{
+                        gestureEnabled: false
+                    }}
+                />
+                <Stack.Screen name='Home' component={Home} options={{
+                    gestureEnabled: false
+                }} />
             </Stack.Navigator>
         </NavigationContainer>
     )

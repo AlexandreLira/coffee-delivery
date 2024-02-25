@@ -1,11 +1,39 @@
 
+import { useCallback } from 'react';
+import { useFonts } from "expo-font";
+import * as SplashScreen from 'expo-splash-screen';
+
 import { Routes } from './src/routes/app.routes';
-import { Home } from './src/screens/Home';
-import { Splash } from './src/screens/Splash';
+
+import { Baloo2_700Bold } from '@expo-google-fonts/baloo-2';
+import { Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
+import { View } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    'Baloo2_Bold': Baloo2_700Bold,
+    'Roboto_Regular': Roboto_400Regular,
+    'Roboto_Bold': Roboto_700Bold,
+  })
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded)
+    return null;
   return (
-    <Routes/>
+    <View
+      style={{ flex: 1 }}
+      onLayout={onLayoutRootView}
+    >
+      <StatusBar style='light' />
+      <Routes />
+    </View>
   );
 }
 
