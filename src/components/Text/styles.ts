@@ -16,6 +16,18 @@ export const styles = StyleSheet.create({
         fontFamily: fonts.Baloo2_Bold,
         lineHeight: 28,
     },
+    title_sm: {
+        fontSize: 16,
+        fontFamily: fonts.Baloo2_Bold,
+    },
+    title_xs: {
+        fontSize: 14,
+        fontFamily: fonts.Baloo2_Bold,
+    },
+    text_md: {
+        fontSize: 16,
+        fontFamily: fonts.Roboto_Regular,
+    },
     text_sm: {
         fontSize: 14,
         fontFamily: fonts.Roboto_Regular,
@@ -28,6 +40,11 @@ export const styles = StyleSheet.create({
     },
     tag: {
         fontSize: 10,
+        fontFamily: fonts.Roboto_Bold,
+        // lineHeight: 28,
+    },
+    button: {
+        fontSize: 14,
         fontFamily: fonts.Roboto_Bold,
         // lineHeight: 28,
     },

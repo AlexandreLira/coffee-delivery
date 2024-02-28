@@ -1,23 +1,36 @@
-import { View, Text } from "react-native";
+import { Pressable, PressableProps, StyleSheet } from "react-native";
 import { theme } from "../../theme/theme";
+import { Text } from "../Text";
 
-interface ButtonProps {
+interface ButtonProps extends PressableProps {
     title: string
+    bg?: string;
 }
 
 export function Button(props: ButtonProps) {
-    const {title} = props
+    const { title, bg = theme.colors.purple, disabled,...rest } = props
+
+    const backgroundColor = { backgroundColor: bg }
+
     return (
-        <View style={{
-            minWidth: 132,
-            height: 46,
-            backgroundColor: theme.colors.purple,
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderRadius: 6,
-            
-        }}>
-            <Text style={{ color: theme.colors.white }}>{title}</Text>
-        </View>
+        <Pressable
+            style={[styles.container, backgroundColor, disabled && {opacity: 0.3}]}
+            {...rest}
+        >
+            <Text
+                type="button"
+                color={theme.colors.white}
+            >{title}</Text>
+        </Pressable>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        height: 46,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 6,
+    }
+})

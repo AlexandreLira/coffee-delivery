@@ -1,119 +1,116 @@
 import {
-    Dimensions,
     FlatList,
+    Image,
+    SectionList,
     StyleSheet,
-
+    TouchableOpacity,
     View
 } from "react-native";
 
 import { theme } from "../../theme/theme";
-import { SafeAreaView, Edges } from "react-native-safe-area-context";
-import { MapPin, ShoppingCart } from "phosphor-react-native";
+import { Edges } from "react-native-safe-area-context";
 import { SearchBar } from "../../components/SearchBar";
 import { Divider } from "../../components/Divider";
 import { Text } from "../../components/Text";
 import { CoffeeCard, ITEM_WIDTH } from "../../components/CoffeeCard";
-import { useSharedValue } from "react-native-reanimated";
+import Animated, { Extrapolation, ZoomIn, interpolate, interpolateColor, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { coffee_list } from "../../utils/constant";
 
-const EDGES: Edges = { bottom: 'off', top: 'additive' }
+import { useEffect, useRef, useState } from "react";
+import { CoffeeCardCatalog } from "../../components/CoffeCardCatalog";
+import { useNavigation } from "@react-navigation/native";
+import { Tag } from "../../components/Tag";
+import { separateCategories } from "../../utils/functions";
+import { Header } from "./header";
+import { StatusBar } from "expo-status-bar";
+import { Hero } from "./hero";
+import { styles } from "./styles";
+import { HeaderCatalogList } from "./headerCatologList";
+import { CoffeeSectionList } from "./coffeeSectionList";
+
+export const EDGES: Edges = { bottom: 'off', top: 'additive' }
+
+const sections = separateCategories(coffee_list)
+const categories = sections.map(item => item.title)
 
 export function Home() {
+    const [tab, setTab] = useState('Tradicionais')
 
+    const introAnimation = useSharedValue(0)
     const contentOffset = useSharedValue(0)
+    const scrollY = useSharedValue(0)
+    const [heroSize, setHeroSize] = useState(0)
+    const [sectionSize, setSectionSize] = useState(0)
 
+    const flatListRef = useRef<FlatList>()
+
+
+    const scrollHandler = useAnimatedScrollHandler({
+        onScroll: (event) => {
+            scrollY.value = event.contentOffset.y;
+        },
+    });
+
+
+    useEffect(() => {
+        introAnimation.value = withTiming(100, { duration: 500 })
+
+    }, [])
 
 
     return (
-        <SafeAreaView
-            edges={EDGES}
+        <View
             style={styles.container}
         >
-
-            <View style={styles.content}>
-                <View style={styles.hero}>
-
-                    <View style={styles.header}>
-                        <View style={styles.location}>
-
-                            <MapPin color={theme.colors.purple} weight="fill" />
-                            <Divider vertical size={4} />
-                            <Text type="text_sm">Porto Alegre, RS</Text>
-                        </View>
-
-                        <ShoppingCart color={theme.colors.yellow_dark} weight="fill" />
-
-                    </View>
+            <StatusBar style={'dark'} />
+            <Header
+                scrollY={scrollY} />
 
 
-                    <Divider size={15} />
-                    <Text type="title_md">Encontre o café perfeito para qualquer hora do dia</Text>
-                    <Divider size={15} />
+            <Animated.FlatList
+                data={categories}
+                ref={flatListRef}
+                keyExtractor={item => item.toString()}
+                onScroll={scrollHandler}
+                stickyHeaderIndices={[1]}
+                renderItem={({ index }) => {
+                    switch (index) {
+                        case 0:
+                            return (
+                                <Hero
+                                    contentOffset={contentOffset}
+                                    introAnimation={introAnimation}
+                                    scrollY={scrollY}
+                                    onLayout={event => setHeroSize(event.nativeEvent.layout.height)}
+                                />
+                            )
 
-                    <SearchBar placeholder="Pesquisar" />
+                        case 1:
+                            return (
+                                <HeaderCatalogList
+                                    categories={categories}
+                                    flatListRef={flatListRef}
+                                    setTab={setTab}
+                                    tab={tab}
+                                    heroSize={heroSize}
 
-                </View>
+                                />
+                            )
+                        case 2:
+                            return (
+                                <CoffeeSectionList
+                                    sections={sections}
 
-                <FlatList
-                    data={coffee_list}
-                    keyExtractor={item => item.name.toString()}
-                    horizontal
-                    scrollEventThrottle={16}
-                    onScroll={event => contentOffset.value = event.nativeEvent.contentOffset.x}
-                    style={styles.flatList}
-                    pagingEnabled
-                    snapToInterval={ITEM_WIDTH}
-                    // bounces={false}
-                    decelerationRate="fast"
-
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.flatListContent}
-                    renderItem={({ item, index }) =>
-                        <CoffeeCard
-                            index={index}
-                            coffee={item}
-                            contentOffset={contentOffset}
-                        />
+                                />
+                            )
                     }
-                />
+                }}
+            />
 
-            </View>
-        </SafeAreaView>
+
+            <View style={styles.footer} />
+
+        </View >
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1, backgroundColor: theme.colors.gray_100
-    },
-    content: {
-        flex: 1,
-        backgroundColor: theme.colors.white,
-
-    },
-    hero: {
-        height: '45%',
-        backgroundColor: theme.colors.gray_100,
-        paddingHorizontal: 32
-    },
-    header: {
-        height: 78,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-
-    },
-    location: {
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    flatList: {
-        overflow: 'visible',
-        marginTop: -100
-    },
-    flatListContent: {
-        justifyContent: 'center',
-        paddingHorizontal: ITEM_WIDTH / 2,
-
-    }
-})

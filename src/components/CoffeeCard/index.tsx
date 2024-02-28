@@ -49,15 +49,7 @@ export function CoffeeCard({ index, contentOffset, coffee }: CoffeeCardProps) {
     })
 
     const rStyle = useAnimatedStyle(() => {
-        const outputRange = [0, -ITEM_WIDTH / 4, 0]
 
-
-        const translateY = interpolate(
-            contentOffset?.value,
-            inputRange,
-            outputRange,
-            Extrapolation.CLAMP
-        )
         const scale = interpolate(
             contentOffset?.value,
             inputRange,
@@ -73,6 +65,8 @@ export function CoffeeCard({ index, contentOffset, coffee }: CoffeeCardProps) {
             ]
         }
     })
+
+ 
 
 
 
