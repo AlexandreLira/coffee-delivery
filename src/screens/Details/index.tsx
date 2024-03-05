@@ -12,6 +12,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { Button } from "../../components/Button";
 import { Select } from "../../components/Select";
+import { Smoke } from "../../components/Smoke";
 
 const COFFEE_SIZES = [
     '114ml',
@@ -28,7 +29,7 @@ export function Details() {
     const { params } = useRoute()
 
     useEffect(() => {
-        setCoffee(params.coffee)
+        setCoffee(params?.coffee)
     }, [params])
 
 
@@ -43,6 +44,7 @@ export function Details() {
     return (
         <SafeAreaView style={styles.container} edges={EDGES}>
             <View style={styles.content}>
+
                 <View style={styles.header}>
                     <TouchableOpacity onPress={navigation.goBack}>
                         <ArrowLeft size={24} color={theme.colors.white} />
@@ -71,6 +73,7 @@ export function Details() {
                     </Text>
                 </View>
 
+                <Smoke />
 
 
             </View>
