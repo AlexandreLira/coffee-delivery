@@ -1,32 +1,20 @@
-import {
-    FlatList,
-    Image,
-    SectionList,
-    StyleSheet,
-    TouchableOpacity,
-    View
-} from "react-native";
-
-import { theme } from "../../theme/theme";
-import { Edges } from "react-native-safe-area-context";
-import { SearchBar } from "../../components/SearchBar";
-import { Divider } from "../../components/Divider";
-import { Text } from "../../components/Text";
-import { CoffeeCard, ITEM_WIDTH } from "../../components/CoffeeCard";
-import Animated, { Extrapolation, ZoomIn, interpolate, interpolateColor, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
-import { coffee_list } from "../../utils/constant";
-
 import { useEffect, useRef, useState } from "react";
-import { CoffeeCardCatalog } from "../../components/CoffeCardCatalog";
-import { useNavigation } from "@react-navigation/native";
-import { Tag } from "../../components/Tag";
-import { separateCategories } from "../../utils/functions";
-import { Header } from "./header";
+import { FlatList, View } from "react-native";
+import { Edges } from "react-native-safe-area-context";
+import Animated, {
+    useAnimatedScrollHandler,
+    useSharedValue,
+    withTiming
+} from "react-native-reanimated";
 import { StatusBar } from "expo-status-bar";
-import { Hero } from "./hero";
-import { styles } from "./styles";
+
+import { coffee_list } from "../../utils/constant";
+import { separateCategories } from "../../utils/functions";
 import { HeaderCatalogList } from "./headerCatologList";
 import { CoffeeSectionList } from "./coffeeSectionList";
+import { Header } from "./header";
+import { Hero } from "./hero";
+import { styles } from "./styles";
 
 export const EDGES: Edges = { bottom: 'off', top: 'additive' }
 
@@ -63,8 +51,7 @@ export function Home() {
             style={styles.container}
         >
             <StatusBar style={'dark'} />
-            <Header
-                scrollY={scrollY} />
+            <Header scrollY={scrollY} />
 
 
             <Animated.FlatList

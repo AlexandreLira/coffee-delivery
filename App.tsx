@@ -9,6 +9,7 @@ import { Baloo2_700Bold } from '@expo-google-fonts/baloo-2';
 import { Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
 import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { CartContextProvider } from './src/contexts/CartContext';
 
 
 export default function App() {
@@ -32,7 +33,9 @@ export default function App() {
       onLayout={onLayoutRootView}
     >
       <StatusBar style='light' />
-      <Routes />
+      <CartContextProvider>
+        <Routes />
+      </CartContextProvider>
     </View>
   );
 }

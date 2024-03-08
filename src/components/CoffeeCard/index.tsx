@@ -9,7 +9,7 @@ import { CaffesImagesType, Icon } from "../Icon";
 const WIDTH = Dimensions.get('screen').width
 export const ITEM_WIDTH = WIDTH / 2
 
-export type ICaffe = {
+export type ICoffee = {
     name: string;
     category: string;
     description: string;
@@ -20,7 +20,7 @@ export type ICaffe = {
 interface CoffeeCardProps {
     contentOffset: any;
     index: number;
-    coffee: ICaffe
+    coffee: ICoffee
 }
 
 export function CoffeeCard({ index, contentOffset, coffee }: CoffeeCardProps) {

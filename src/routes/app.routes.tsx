@@ -23,11 +23,14 @@ export function Routes() {
                     name='Home'
                     component={Home}
                     options={{
-                        gestureEnabled: false
+                        gestureEnabled: false,
                     }}
                 />
                 <Stack.Screen
                     name='Details'
+                    options={{
+                        animation: 'fade_from_bottom'
+                    }}
                     component={Details}
                 />
             </Stack.Navigator>

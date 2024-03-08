@@ -1,18 +1,22 @@
+import { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import { Text } from "../../components/Text";
-import { theme } from "../../theme/theme";
-import { ArrowLeft, Minus, Plus, ShoppingCart } from "phosphor-react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { coffee_list } from "../../utils/constant";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { ArrowLeft, Minus, Plus, ShoppingCart } from "phosphor-react-native";
+
 import { EDGES } from "../Home";
 import { Price } from "../../components/Price";
 import { Divider } from "../../components/Divider";
 import { Tag } from "../../components/Tag";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { useEffect, useState } from "react";
 import { Button } from "../../components/Button";
 import { Select } from "../../components/Select";
 import { Smoke } from "../../components/Smoke";
+import { Text } from "../../components/Text";
+
+import { useCart } from "../../hooks/useCart";
+import { AddCoffeeProps } from "../../contexts/CartContext";
+import { theme } from "../../theme/theme";
+import { coffee_list } from "../../utils/constant";
 
 const COFFEE_SIZES = [
     '114ml',
@@ -27,6 +31,7 @@ export function Details() {
 
     const navigation = useNavigation()
     const { params } = useRoute()
+    const { addCoffee } = useCart()
 
     useEffect(() => {
         setCoffee(params?.coffee)
@@ -41,6 +46,17 @@ export function Details() {
         setAmount(amount - 1)
     }
 
+    function handleAddCoffee() {
+        const product: AddCoffeeProps = {
+            ...coffee,
+            amount: amount,
+            size: selectedSize,
+        }
+        addCoffee(product)
+
+        navigation.goBack()
+    }
+
     return (
         <SafeAreaView style={styles.container} edges={EDGES}>
             <View style={styles.content}>
@@ -49,7 +65,7 @@ export function Details() {
                     <TouchableOpacity onPress={navigation.goBack}>
                         <ArrowLeft size={24} color={theme.colors.white} />
                     </TouchableOpacity>
-                    <ShoppingCart color={theme.colors.yellow_dark} weight="fill" />
+                    <ShoppingCart color={theme.colors.white} weight="fill" />
                 </View>
                 <Divider size={12} />
 
@@ -142,7 +158,7 @@ export function Details() {
                     <Button
                         disabled={selectedSize == ''}
                         title="ADICIONAR"
-
+                        onPress={handleAddCoffee}
                         bg={theme.colors.purple_dark}
                     />
                 </View>

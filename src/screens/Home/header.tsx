@@ -1,9 +1,17 @@
-import { MapPin, ShoppingCart } from "phosphor-react-native";
-import Animated, { Extrapolation, SharedValue, interpolate, interpolateColor, useAnimatedStyle } from "react-native-reanimated";
+import { MapPin } from "phosphor-react-native";
+import Animated, {
+    Extrapolation,
+    SharedValue,
+    interpolate,
+    interpolateColor,
+    useAnimatedStyle
+} from "react-native-reanimated";
 import { theme } from "../../theme/theme";
 import { Divider } from "../../components/Divider";
 import { StyleSheet, View } from "react-native";
 import { fonts } from "../../theme/fonts";
+import { useCart } from "../../hooks/useCart";
+import { CartBadge } from "../../components/CartBadge";
 
 interface HeaderProps {
     scrollY: SharedValue<number>
@@ -11,6 +19,8 @@ interface HeaderProps {
 
 export function Header(props: HeaderProps) {
     const { scrollY } = props
+
+    const { cart } = useCart()
 
     const scrollYInputRange = [0, 300]
 
@@ -30,7 +40,7 @@ export function Header(props: HeaderProps) {
         color: interpolateColor(scrollY.value, scrollYInputRange, [theme.colors.white, theme.colors.gray_100])
     }))
     return (
-        <Animated.View style={[styles.header, headerStyle]}>
+        <Animated.View style={[headerStyle]}>
             <Divider size={62} />
             <Animated.View style={[styles.content, contentStyle]}>
                 <View style={styles.location}>
@@ -39,8 +49,7 @@ export function Header(props: HeaderProps) {
                     <Divider vertical size={4} />
                     <Animated.Text style={[styles.text, textStyle]}>Porto Alegre, RS</Animated.Text>
                 </View>
-
-                <ShoppingCart color={theme.colors.yellow_dark} weight="fill" />
+                <CartBadge value={cart.length} />
             </Animated.View>
 
         </Animated.View>
@@ -49,12 +58,6 @@ export function Header(props: HeaderProps) {
 }
 
 const styles = StyleSheet.create({
-
-    header: {
-
-
-
-    },
     content: {
         alignItems: 'center',
         justifyContent: 'space-between',
