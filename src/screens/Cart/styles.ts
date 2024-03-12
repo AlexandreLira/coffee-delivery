@@ -22,9 +22,10 @@ export const styling = () => StyleSheet.create({
     },
     deleteWrapper: {
         height: '100%',
-        width: '20%',
+        width: '100%',
         justifyContent: 'center',
-        alignItems: 'center'
+        marginLeft: 32,
+        alignItems: 'flex-start'
     }
 
 })

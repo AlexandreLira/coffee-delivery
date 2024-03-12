@@ -13,7 +13,7 @@ import { useCart } from "../../hooks/useCart";
 import { theme } from "../../theme/theme";
 import { styling } from "./styles";
 import { Swipeable } from "react-native-gesture-handler";
-import Animated, { LinearTransition, SlideInRight } from "react-native-reanimated";
+import Animated, { FadeIn, LinearTransition, SlideInRight } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 
 export function Cart() {
@@ -42,7 +42,11 @@ export function Cart() {
             <Animated.FlatList
                 data={cart}
                 keyExtractor={item => item.id}
-                ListEmptyComponent={<EmptyState />}
+                ListEmptyComponent={
+                    <Animated.View entering={FadeIn.delay(500)}>
+                        <EmptyState />
+                    </Animated.View>
+                }
                 itemLayoutAnimation={LinearTransition.springify().delay(500)}
                 renderItem={({ item, index }) =>
                     <Animated.View
@@ -52,6 +56,7 @@ export function Cart() {
                         <Swipeable
                             onSwipeableOpen={() => handleDeleteItem(item.id)}
                             containerStyle={{ backgroundColor: theme.colors.red_light }}
+                            leftThreshold={10}
                             renderLeftActions={() =>
                                 <View style={styles.deleteWrapper}>
                                     <Trash color={theme.colors.red_dark} size={28} />

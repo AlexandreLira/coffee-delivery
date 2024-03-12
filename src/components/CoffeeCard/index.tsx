@@ -10,6 +10,7 @@ const WIDTH = Dimensions.get('screen').width
 export const ITEM_WIDTH = WIDTH / 2
 
 export type ICoffee = {
+    id: string;
     name: string;
     category: string;
     description: string;
