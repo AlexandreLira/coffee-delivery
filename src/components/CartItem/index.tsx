@@ -8,17 +8,18 @@ import { AddCoffeeProps } from "../../contexts/CartContext";
 import { styling } from "./styles";
 
 export interface CartItemProps {
-    value: AddCoffeeProps
+    value: AddCoffeeProps;
+    onDelete: () => void;
 }
 
-export function CartItem({ value }: CartItemProps) {
+export function CartItem({ value, onDelete }: CartItemProps) {
     const styles = styling()
     return (
         <View style={styles.container} >
             <Icon
                 height={64}
                 name={value.icon}
-                style={{marginLeft: -24}}
+                style={{ marginLeft: -24 }}
             />
             <Divider size={4} vertical />
             <View style={styles.content}>
@@ -55,7 +56,10 @@ export function CartItem({ value }: CartItemProps) {
 
                         </View>
                         <Divider size={8} vertical />
-                        <TouchableOpacity style={styles.deleteButton}>
+                        <TouchableOpacity
+                            style={styles.deleteButton}
+                            onPress={onDelete}
+                        >
                             <Trash
                                 size={20}
                                 color={theme.colors.purple}

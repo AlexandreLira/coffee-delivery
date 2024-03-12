@@ -2,15 +2,14 @@
 import { useCallback } from 'react';
 import { useFonts } from "expo-font";
 import * as SplashScreen from 'expo-splash-screen';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { Routes } from './src/routes/app.routes';
 
 import { Baloo2_700Bold } from '@expo-google-fonts/baloo-2';
 import { Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
-import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { CartContextProvider } from './src/contexts/CartContext';
-import { Toast } from './src/components/Toast';
 import { fonts } from './src/theme/fonts';
 
 
@@ -30,7 +29,7 @@ export default function App() {
   if (!fontsLoaded)
     return null;
   return (
-    <View
+    <GestureHandlerRootView
       style={{ flex: 1 }}
       onLayout={onLayoutRootView}
     >
@@ -38,7 +37,7 @@ export default function App() {
       <CartContextProvider>
         <Routes />
       </CartContextProvider>
-    </View>
+    </GestureHandlerRootView>
   );
 }
 

@@ -13,6 +13,7 @@ export type ICart = AddCoffeeProps
 export interface CartContextDataProps {
     cart: AddCoffeeProps[]
     addCoffee: (value: AddCoffeeProps) => void
+    deleteCoffee: (id: string) => void
 }
 
 interface CartContextProviderProps {
@@ -29,8 +30,13 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         setCart(items)
     }
 
+    function deleteCoffee(id: string){
+        const coffees = cart.filter(coffee => coffee.id !== id)
+        setCart(coffees)
+    }
+
     return (
-        <CartContext.Provider value={{cart, addCoffee}}>
+        <CartContext.Provider value={{cart, addCoffee, deleteCoffee}}>
             {children}
         </CartContext.Provider>
     )

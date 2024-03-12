@@ -19,6 +19,12 @@ export const styling = () => StyleSheet.create({
     backIcon: {
         position: "absolute",
         left: 35
+    },
+    deleteWrapper: {
+        height: '100%',
+        width: '20%',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 
 })
