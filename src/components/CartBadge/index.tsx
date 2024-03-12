@@ -1,20 +1,18 @@
 import { ShoppingCart } from "phosphor-react-native";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, TouchableOpacityProps, View } from "react-native";
 import { theme } from "../../theme/theme";
-import { Text } from "../Text";
 import { styles } from "./styles";
+import { Badge } from "../Badge";
 
-interface CartBadgeProps {
+interface CartBadgeProps extends TouchableOpacityProps {
     value: number
 }
 
-export function CartBadge({ value }: CartBadgeProps) {
+export function CartBadge({ value, ...rest }: CartBadgeProps) {
     return (
-        <TouchableOpacity>
+        <TouchableOpacity {...rest}>
             {value > 0 &&
-                <View style={styles.bagde}>
-                    <Text type="text_xs" >{value}</Text>
-                </View>
+                <Badge value={value} style={styles.bagde} />
             }
             <ShoppingCart color={theme.colors.yellow_dark} weight="fill" />
         </TouchableOpacity>

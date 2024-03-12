@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     title_lg: {
         fontSize: 24,
         fontFamily: fonts.Baloo2_Bold,
-        lineHeight: 28,
     },
     title_md: {
         fontSize: 20,
@@ -31,12 +30,10 @@ export const styles = StyleSheet.create({
     text_sm: {
         fontSize: 14,
         fontFamily: fonts.Roboto_Regular,
-        // lineHeight: 28,
     },
     text_xs: {
         fontSize: 12,
         fontFamily: fonts.Roboto_Regular,
-        // lineHeight: 28,
     },
     tag: {
         fontSize: 10,

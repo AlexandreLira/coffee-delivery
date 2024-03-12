@@ -12,6 +12,7 @@ import { StyleSheet, View } from "react-native";
 import { fonts } from "../../theme/fonts";
 import { useCart } from "../../hooks/useCart";
 import { CartBadge } from "../../components/CartBadge";
+import { useNavigation } from "@react-navigation/native";
 
 interface HeaderProps {
     scrollY: SharedValue<number>
@@ -21,6 +22,7 @@ export function Header(props: HeaderProps) {
     const { scrollY } = props
 
     const { cart } = useCart()
+    const { navigate } = useNavigation()
 
     const scrollYInputRange = [0, 300]
 
@@ -49,7 +51,7 @@ export function Header(props: HeaderProps) {
                     <Divider vertical size={4} />
                     <Animated.Text style={[styles.text, textStyle]}>Porto Alegre, RS</Animated.Text>
                 </View>
-                <CartBadge value={cart.length} />
+                <CartBadge value={cart.length} onPress={() => navigate('Cart')} />
             </Animated.View>
 
         </Animated.View>

@@ -8,8 +8,10 @@ export interface AddCoffeeProps extends ICoffee  {
     amount: number
 }
 
+export type ICart = AddCoffeeProps
+
 export interface CartContextDataProps {
-    cart: string[]
+    cart: AddCoffeeProps[]
     addCoffee: (value: AddCoffeeProps) => void
 }
 
@@ -20,7 +22,7 @@ interface CartContextProviderProps {
 export const CartContext = createContext({} as CartContextDataProps)
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-    const [cart, setCart] = useState([])
+    const [cart, setCart] = useState<ICart[]>([])
 
     function addCoffee(value: AddCoffeeProps){
         const items = [...cart, value]

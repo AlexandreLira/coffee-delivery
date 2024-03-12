@@ -10,13 +10,15 @@ import { Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
 import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { CartContextProvider } from './src/contexts/CartContext';
+import { Toast } from './src/components/Toast';
+import { fonts } from './src/theme/fonts';
 
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    'Baloo2_Bold': Baloo2_700Bold,
-    'Roboto_Regular': Roboto_400Regular,
-    'Roboto_Bold': Roboto_700Bold,
+    [fonts.Baloo2_Bold]: Baloo2_700Bold,
+    [fonts.Roboto_Regular]: Roboto_400Regular,
+    [fonts.Roboto_Bold]: Roboto_700Bold,
   })
 
   const onLayoutRootView = useCallback(async () => {

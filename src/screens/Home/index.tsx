@@ -15,6 +15,7 @@ import { CoffeeSectionList } from "./coffeeSectionList";
 import { Header } from "./header";
 import { Hero } from "./hero";
 import { styles } from "./styles";
+import { Toast } from "../../components/Toast";
 
 export const EDGES: Edges = { bottom: 'off', top: 'additive' }
 
@@ -96,7 +97,7 @@ export function Home() {
 
 
             <View style={styles.footer} />
-
+            <Toast />
         </View >
     )
 }
