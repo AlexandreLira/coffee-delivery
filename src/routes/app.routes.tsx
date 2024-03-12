@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Splash } from '../screens/Splash';
 import { Home } from '../screens/Home';
 import { Details } from '../screens/Details';
+import { Cart } from '../screens/Cart';
 
 const Stack = createNativeStackNavigator()
 
@@ -32,6 +33,10 @@ export function Routes() {
                         animation: 'fade_from_bottom'
                     }}
                     component={Details}
+                />
+                <Stack.Screen
+                    name='Cart'
+                    component={Cart}
                 />
             </Stack.Navigator>
         </NavigationContainer>
