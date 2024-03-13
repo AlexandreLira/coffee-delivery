@@ -17,6 +17,9 @@ import { useCart } from "../../hooks/useCart";
 import { AddCoffeeProps } from "../../contexts/CartContext";
 import { theme } from "../../theme/theme";
 import { coffee_list } from "../../utils/constant";
+import { StatusBar } from "expo-status-bar";
+import Animated, { interpolateColor, useAnimatedStyle, useSharedValue, withSequence, withTiming } from "react-native-reanimated";
+import { textStyles } from "../../components/Text/styles";
 
 const COFFEE_SIZES = [
     '114ml',
@@ -33,6 +36,8 @@ export function Details() {
     const { params } = useRoute()
     const { addCoffee } = useCart()
 
+    const errorAnimation = useSharedValue(0)
+
     useEffect(() => {
         setCoffee(params?.coffee)
     }, [params])
@@ -46,7 +51,19 @@ export function Details() {
         setAmount(amount - 1)
     }
 
+    function startErrorAnimation() {
+        errorAnimation.value = withSequence(
+            withTiming(100),
+            withTiming(0, { duration: 1000 })
+        )
+    }
+
     function handleAddCoffee() {
+        if (selectedSize.length == 0) {
+            startErrorAnimation()
+            return
+        }
+
         const product: AddCoffeeProps = {
             ...coffee,
             amount: amount,
@@ -57,8 +74,14 @@ export function Details() {
         navigation.goBack()
     }
 
+    const styleErrorAnimation = useAnimatedStyle(() => ({
+        color: interpolateColor(errorAnimation.value, [0, 100], [theme.colors.gray_400, theme.colors.red_dark]),
+        ...textStyles.text_sm
+    }))
+
     return (
         <SafeAreaView style={styles.container} edges={EDGES}>
+            <StatusBar style="light" />
             <View style={styles.content}>
 
                 <View style={styles.header}>
@@ -100,17 +123,15 @@ export function Details() {
                     height={260}
                     style={{ alignSelf: 'center', marginTop: -230 }}
                 />
-                <Text
-                    type="text_sm"
-                    color={theme.colors.gray_400}
-                >
+                <Animated.Text style={styleErrorAnimation}>
                     Selecione o tamanho:
-                </Text>
+                </Animated.Text>
                 <Divider size={8} />
                 <View style={styles.select}>
 
                     {COFFEE_SIZES.map(size =>
                         <Select
+                            errorAnimation={errorAnimation}
                             style={{ width: '32%' }}
                             onPress={() => setSelectedSize(size)}
                             key={size}

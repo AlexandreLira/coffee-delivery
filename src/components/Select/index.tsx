@@ -1,17 +1,18 @@
 import { useEffect } from "react";
-import { Pressable, PressableProps, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { Pressable, PressableProps, StyleSheet } from "react-native";
 import { Text } from "../Text";
 import { theme } from "../../theme/theme";
-import Animated, { AnimatedStyle, interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { SharedValue, interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 
 interface SelectProps extends PressableProps {
     selected?: boolean;
     text: string;
+    errorAnimation: SharedValue<number>
 }
 
 export function Select(props: SelectProps) {
-    const { selected, text, ...rest } = props
+    const { selected, text, errorAnimation, ...rest } = props
     const { colors } = theme
     const { gray_300, gray_700, purple } = colors
 
@@ -19,20 +20,24 @@ export function Select(props: SelectProps) {
 
     const selectStyle = useAnimatedStyle(() => ({
         borderWidth: 1,
-        borderColor: interpolateColor(value.value, [0, 1], ['transparent', purple]),
-        backgroundColor: interpolateColor(value.value, [0, 1], [gray_700, 'transparent'])
+        borderColor: interpolateColor(value.value, [0, 100], ['transparent', purple]),
+        backgroundColor: selected ? 'transparent' : colors.gray_700
+    }))
+
+    const errorStyles = useAnimatedStyle(() => ({
+        borderColor: interpolateColor(errorAnimation.value, [0, 100], ['transparent', colors.red_dark]),
     }))
 
 
     useEffect(() => {
 
-        value.value = withTiming(selected ? 1 : 0)
+        value.value = withTiming(selected ? 100 : 0, { duration: 500 })
 
     }, [selected])
 
     return (
         <Pressable {...rest}>
-            <Animated.View style={[styles.container, selectStyle]} >
+            <Animated.View style={[styles.container, selectStyle, errorStyles]} >
                 <Text
                     color={selected ? purple : gray_300}
                     type={selected ? 'button' : 'text_sm'}
