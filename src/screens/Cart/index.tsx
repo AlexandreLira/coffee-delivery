@@ -13,18 +13,39 @@ import { useCart } from "../../hooks/useCart";
 import { theme } from "../../theme/theme";
 import { styling } from "./styles";
 import { Swipeable } from "react-native-gesture-handler";
-import Animated, { FadeIn, LinearTransition, SlideInRight } from "react-native-reanimated";
+import Animated, { Easing, FadeIn, LinearTransition, SlideInRight, interpolate, useAnimatedStyle, useSharedValue, withDelay, withTiming } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
+import { Button } from "../../components/Button";
+import { Divider } from "../../components/Divider";
+import { useEffect } from "react";
 
 export function Cart() {
     const { cart, deleteCoffee } = useCart()
     const styles = styling()
 
+    const animation = useSharedValue(0)
+
     const navigation = useNavigation()
+
+
+    const footerStyles = useAnimatedStyle(() => ({
+        transform: [{ translateY: interpolate(animation.value, [100, 0], [0, 180]) }],
+    }))
 
     function handleDeleteItem(id: string) {
         deleteCoffee(id)
     }
+
+    useEffect(() => {
+        if (cart.length == 0) {
+            animation.value = withTiming(0, { easing: Easing.ease })
+
+        } else {
+            animation.value = withDelay(250,
+                withTiming(100, { easing: Easing.elastic() })
+            )
+        }
+    }, [cart])
 
     return (
         <SafeAreaView style={styles.container} edges={EDGES}>
@@ -43,7 +64,7 @@ export function Cart() {
                 data={cart}
                 keyExtractor={item => item.id}
                 ListEmptyComponent={
-                    <Animated.View entering={FadeIn.delay(500)}>
+                    <Animated.View entering={FadeIn}>
                         <EmptyState />
                     </Animated.View>
                 }
@@ -71,6 +92,21 @@ export function Cart() {
                     </Animated.View>
                 }
             />
+
+            <Animated.View style={[styles.footerAction, footerStyles]}>
+                <View style={styles.footerPriceWrapper}>
+                    <Text
+                        type="text_md"
+                        color={theme.colors.gray_200}
+                    >Valor Total</Text>
+                    <Text
+                        type="title_md"
+                        color={theme.colors.gray_200}
+                    >R$ 9,99</Text>
+                </View>
+                <Divider size={22} />
+                <Button title="CONFIRMAR PEDIDO" bg={theme.colors.yellow_dark} />
+            </Animated.View>
 
 
         </SafeAreaView>

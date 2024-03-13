@@ -26,6 +26,18 @@ export const styling = () => StyleSheet.create({
         justifyContent: 'center',
         marginLeft: 32,
         alignItems: 'flex-start'
+    },
+    footerAction: {
+        width: '100%',
+        height: '22%',
+        backgroundColor: theme.colors.white,
+        paddingHorizontal: 32,
+        paddingVertical: 28,
+        ...theme.shadow[9]
+    },
+    footerPriceWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 
 })

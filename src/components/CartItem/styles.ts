@@ -9,7 +9,7 @@ export const styling = () => StyleSheet.create({
         height: 117,
         alignItems: 'center',
         borderBottomColor: theme.colors.gray_700,
-        backgroundColor: theme.colors.white,
+        backgroundColor: theme.colors.gray_900,
         borderBottomWidth: 1
     },
     content: {
