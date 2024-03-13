@@ -2,7 +2,6 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import { theme } from "../../theme/theme";
 import { Text } from "../Text";
 import { Divider } from "../Divider";
-import Latte from '../../assets/images/latte.svg';
 import Animated, { Extrapolation, interpolate, useAnimatedStyle } from "react-native-reanimated";
 import { CaffesImagesType, Icon } from "../Icon";
 
@@ -14,7 +13,7 @@ export type ICoffee = {
     name: string;
     category: string;
     description: string;
-    price: string;
+    price: number;
     icon: CaffesImagesType;
 }
 
@@ -129,9 +128,9 @@ export function CoffeeCard({ index, contentOffset, coffee }: CoffeeCardProps) {
                 type="text_sm"
                 style={{ textAlign: 'center' }}
             >
-                R$
+                R${' '}
                 <Text color={theme.colors.yellow_dark} type="title_lg">
-                    {coffee.price}
+                    {coffee.price.toFixed(2)}
                 </Text>
             </Text>
 

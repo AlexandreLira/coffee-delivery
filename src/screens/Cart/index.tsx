@@ -20,7 +20,7 @@ import { Divider } from "../../components/Divider";
 import { useEffect } from "react";
 
 export function Cart() {
-    const { cart, deleteCoffee } = useCart()
+    const { cart, deleteCoffee, quantity, totalPrice } = useCart()
     const styles = styling()
 
     const animation = useSharedValue(0)
@@ -93,6 +93,8 @@ export function Cart() {
                         >
                             <CartItem
                                 value={item}
+                                onDecrease={() => quantity.decrease(item.id)}
+                                onIncrease={() => quantity.increase(item.id)}
                                 onDelete={() => handleDeleteItem(item.id)}
                             />
                         </Swipeable>
@@ -109,7 +111,7 @@ export function Cart() {
                     <Text
                         type="title_md"
                         color={theme.colors.gray_200}
-                    >R$ 9,99</Text>
+                    >R$ {totalPrice.toFixed(2)}</Text>
                 </View>
                 <Divider size={22} />
                 <Button title="CONFIRMAR PEDIDO" bg={theme.colors.yellow_dark} />

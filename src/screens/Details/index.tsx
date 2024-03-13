@@ -34,7 +34,7 @@ export function Details() {
 
     const navigation = useNavigation()
     const { params } = useRoute()
-    const { addCoffee } = useCart()
+    const { addCoffee, cart } = useCart()
 
     const errorAnimation = useSharedValue(0)
 
@@ -101,7 +101,7 @@ export function Details() {
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end' }}>
 
                         <Text type="title_lg">{coffee.name}</Text>
-                        <Price value="9.99" textSize="title_xl" color={theme.colors.yellow} />
+                        <Price value={(coffee.price * amount).toFixed(2)} textSize="title_xl" color={theme.colors.yellow} />
                     </View>
                     <Divider size={20} />
                     <Text

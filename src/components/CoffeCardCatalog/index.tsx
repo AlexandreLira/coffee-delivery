@@ -2,21 +2,12 @@ import { Dimensions, Pressable, PressableProps, StyleSheet, View, ViewProps } fr
 import { theme } from "../../theme/theme";
 import { Text } from "../Text";
 import { Divider } from "../Divider";
-import Latte from '../../assets/images/latte.svg';
-import { CaffesImagesType, Icon } from "../Icon";
+import { Icon } from "../Icon";
+import { ICoffee } from "../CoffeeCard";
 
-
-
-export type ICaffe = {
-    name: string;
-    category: string;
-    description: string;
-    price: string;
-    icon: CaffesImagesType;
-}
 
 interface CoffeeCardProps extends PressableProps {
-    coffee: ICaffe
+    coffee: ICoffee
 }
 
 export function CoffeeCardCatalog({ coffee, ...rest }: CoffeeCardProps) {
@@ -59,9 +50,9 @@ export function CoffeeCardCatalog({ coffee, ...rest }: CoffeeCardProps) {
                     color={theme.colors.yellow_dark}
                     type="text_sm"
                 >
-                    R$
+                    R${' '}
                     <Text color={theme.colors.yellow_dark} type="title_lg">
-                        {coffee.price}
+                        {coffee.price.toFixed(2)}
                     </Text>
                 </Text>
             </View>
