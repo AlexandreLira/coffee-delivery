@@ -8,13 +8,13 @@ interface ButtonProps extends PressableProps {
 }
 
 export function Button(props: ButtonProps) {
-    const { title, bg = theme.colors.purple, disabled,...rest } = props
+    const { title, bg = theme.colors.purple, disabled, ...rest } = props
 
     const backgroundColor = { backgroundColor: bg }
 
     return (
         <Pressable
-            style={[styles.container, backgroundColor, disabled && {opacity: 0.3}]}
+            style={[styles.container, backgroundColor, disabled && { opacity: 0.3 }]}
             {...rest}
         >
             <Text

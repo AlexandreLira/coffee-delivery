@@ -154,13 +154,14 @@ export function Details() {
 
                     </View>
                     <Divider size={16} vertical />
-
-                    <Button
-                        disabled={selectedSize == ''}
-                        title="ADICIONAR"
-                        onPress={handleAddCoffee}
-                        bg={theme.colors.purple_dark}
-                    />
+                    <View style={{ flex: 1, }}>
+                        <Button
+                            disabled={selectedSize.length == 0}
+                            title="ADICIONAR"
+                            onPress={handleAddCoffee}
+                            bg={theme.colors.purple_dark}
+                        />
+                    </View>
                 </View>
             </View>
 

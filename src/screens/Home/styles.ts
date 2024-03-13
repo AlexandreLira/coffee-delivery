@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { ITEM_WIDTH } from "../../components/CoffeeCard";
 import { theme } from "../../theme/theme";
 
@@ -34,7 +34,8 @@ export const styles = StyleSheet.create({
         marginTop: -100,
     },
     flatListContent: {
-        justifyContent: 'center',
+        justifyContent: Platform.OS == 'ios' ? 'center' : 'flex-start',
+        paddingTop: 32,
         paddingHorizontal: ITEM_WIDTH / 2,
 
     },

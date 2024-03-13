@@ -36,13 +36,17 @@ export function Cart() {
         deleteCoffee(id)
     }
 
+    function handleGoHome() {
+        navigation.navigate('Home')
+    }
+
     useEffect(() => {
         if (cart.length == 0) {
             animation.value = withTiming(0, { easing: Easing.ease })
 
         } else {
             animation.value = withDelay(250,
-                withTiming(100, { easing: Easing.elastic() })
+                withTiming(100, { easing: Easing.ease })
             )
         }
     }, [cart])
@@ -50,7 +54,10 @@ export function Cart() {
     return (
         <SafeAreaView style={styles.container} edges={EDGES}>
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backIcon}>
+                <TouchableOpacity
+                    onPress={handleGoHome}
+                    style={styles.backIcon}
+                >
                     <ArrowLeft
                         size={24}
                         color={theme.colors.gray_100}
@@ -65,7 +72,7 @@ export function Cart() {
                 keyExtractor={item => item.id}
                 ListEmptyComponent={
                     <Animated.View entering={FadeIn}>
-                        <EmptyState />
+                        <EmptyState onPress={handleGoHome} />
                     </Animated.View>
                 }
                 itemLayoutAnimation={LinearTransition.springify().delay(500)}
