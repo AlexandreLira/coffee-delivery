@@ -114,7 +114,11 @@ export function Cart() {
                     >R$ {totalPrice.toFixed(2)}</Text>
                 </View>
                 <Divider size={22} />
-                <Button title="CONFIRMAR PEDIDO" bg={theme.colors.yellow_dark} />
+                <Button
+                    title="CONFIRMAR PEDIDO"
+                    bg={theme.colors.yellow_dark}
+                    onPress={() => navigation.navigate('OrderCompleted')}
+                />
             </Animated.View>
 
 
