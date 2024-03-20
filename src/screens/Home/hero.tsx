@@ -9,6 +9,7 @@ import { coffee_list } from "../../utils/constant";
 import { CoffeeCard, ITEM_WIDTH } from "../../components/CoffeeCard";
 import coffeeBean from '../../assets/images/coffeeBean.png'
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigation } from "../../routes/app.routes";
 
 export interface HeroProps extends ViewProps {
     introAnimation: SharedValue<number>;
@@ -22,7 +23,7 @@ export function Hero(props: HeroProps) {
 
     const { colors } = theme
 
-    const navigation = useNavigation()
+    const navigation = useNavigation<StackNavigation>()
 
     const introStyle = useAnimatedStyle(() => ({
         height: interpolate(introAnimation.value, [0, 100], [0, 300]),

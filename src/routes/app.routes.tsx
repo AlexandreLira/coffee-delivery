@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, NavigationProp } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Splash } from '../screens/Splash';
 import { Home } from '../screens/Home';
@@ -7,7 +7,18 @@ import { Details } from '../screens/Details';
 import { Cart } from '../screens/Cart';
 import { OrderCompleted } from '../screens/OrderCompleted';
 
-const Stack = createNativeStackNavigator()
+export type RootStackParamList = {
+    Splash: undefined;
+    Home: undefined;
+    Details: undefined;
+    Cart: undefined;
+    OrderCompleted: undefined;
+
+};
+
+export type StackNavigation = NavigationProp<RootStackParamList>;
+
+const Stack = createNativeStackNavigator<RootStackParamList>()
 
 export function Routes() {
 

@@ -18,6 +18,8 @@ import { useNavigation } from "@react-navigation/native";
 import { Button } from "../../components/Button";
 import { Divider } from "../../components/Divider";
 import { useEffect } from "react";
+import { Audio } from "expo-av";
+import { StackNavigation } from "../../routes/app.routes";
 
 export function Cart() {
     const { cart, deleteCoffee, quantity, totalPrice } = useCart()
@@ -25,7 +27,7 @@ export function Cart() {
 
     const animation = useSharedValue(0)
 
-    const navigation = useNavigation()
+    const navigation = useNavigation<StackNavigation>()
 
 
     const footerStyles = useAnimatedStyle(() => ({
@@ -38,6 +40,14 @@ export function Cart() {
 
     function handleGoHome() {
         navigation.navigate('Home')
+    }
+
+    async function handleFinish() {
+        const file = require('../../assets/sounds/ping.mp3');
+        const { sound } = await Audio.Sound.createAsync(file, { shouldPlay: true })
+        await sound.setPositionAsync(0);
+        await sound.playAsync()
+        navigation.navigate('OrderCompleted')
     }
 
     useEffect(() => {
@@ -117,7 +127,7 @@ export function Cart() {
                 <Button
                     title="CONFIRMAR PEDIDO"
                     bg={theme.colors.yellow_dark}
-                    onPress={() => navigation.navigate('OrderCompleted')}
+                    onPress={handleFinish}
                 />
             </Animated.View>
 

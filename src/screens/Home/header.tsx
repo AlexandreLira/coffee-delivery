@@ -13,6 +13,7 @@ import { fonts } from "../../theme/fonts";
 import { useCart } from "../../hooks/useCart";
 import { CartBadge } from "../../components/CartBadge";
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigation } from "../../routes/app.routes";
 
 interface HeaderProps {
     scrollY: SharedValue<number>
@@ -22,7 +23,7 @@ export function Header(props: HeaderProps) {
     const { scrollY } = props
 
     const { cart } = useCart()
-    const { navigate } = useNavigation()
+    const { navigate } = useNavigation<StackNavigation>()
 
     const scrollYInputRange = [0, 300]
 

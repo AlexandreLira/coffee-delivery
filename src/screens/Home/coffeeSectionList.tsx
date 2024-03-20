@@ -4,6 +4,7 @@ import { theme } from "../../theme/theme"
 import { Divider } from "../../components/Divider"
 import { Text } from "../../components/Text"
 import { useNavigation } from "@react-navigation/native"
+import { StackNavigation } from "../../routes/app.routes"
 
 export interface CoffeeSectionListProps {
     sections: {
@@ -14,7 +15,7 @@ export interface CoffeeSectionListProps {
 
 export function CoffeeSectionList(props: CoffeeSectionListProps) {
     const { sections } = props
-    const navigation = useNavigation()
+    const navigation = useNavigation<StackNavigation>()
     return (
         <View style={{
             paddingHorizontal: 32,

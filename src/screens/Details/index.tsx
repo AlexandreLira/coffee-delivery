@@ -20,6 +20,9 @@ import { coffee_list } from "../../utils/constant";
 import { StatusBar } from "expo-status-bar";
 import Animated, { interpolateColor, useAnimatedStyle, useSharedValue, withSequence, withTiming } from "react-native-reanimated";
 import { textStyles } from "../../components/Text/styles";
+import { Audio } from 'expo-av';
+import * as Haptics from 'expo-haptics';
+
 
 const COFFEE_SIZES = [
     '114ml',
@@ -38,10 +41,14 @@ export function Details() {
 
     const errorAnimation = useSharedValue(0)
 
-    useEffect(() => {
-        setCoffee(params?.coffee)
-    }, [params])
+    async function playSound() {
+        const file = require('../../assets/sounds/cash_register.mp3');
 
+        const { sound } = await Audio.Sound.createAsync(file, { shouldPlay: true });
+
+        await sound.setPositionAsync(0);
+        await sound.playAsync()
+    }
 
     function increase() {
         setAmount(amount + 1)
@@ -58,8 +65,9 @@ export function Details() {
         )
     }
 
-    function handleAddCoffee() {
+    async function handleAddCoffee() {
         if (selectedSize.length == 0) {
+            await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error)
             startErrorAnimation()
             return
         }
@@ -70,7 +78,7 @@ export function Details() {
             size: selectedSize,
         }
         addCoffee(product)
-
+        playSound()
         navigation.goBack()
     }
 
@@ -78,6 +86,10 @@ export function Details() {
         color: interpolateColor(errorAnimation.value, [0, 100], [theme.colors.gray_400, theme.colors.red_dark]),
         ...textStyles.text_sm
     }))
+
+    useEffect(() => {
+        setCoffee(params?.coffee)
+    }, [params])
 
     return (
         <SafeAreaView style={styles.container} edges={EDGES}>

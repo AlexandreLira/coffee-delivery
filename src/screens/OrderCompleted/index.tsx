@@ -42,21 +42,17 @@ export function OrderCompleted() {
     }))
 
     const line1 = useLoop({
-        duration: 500,
+        duration: 600,
         easing: Easing.elastic()
     })
     const line2 = useLoop({
-        duration: 1000,
+        duration: 700,
         easing: Easing.elastic()
     })
     const line3 = useLoop({
-        duration: 1500,
+        duration: 800,
         easing: Easing.elastic()
     })
-
-
-
-
 
     useEffect(() => {
         animation.value =

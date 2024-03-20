@@ -19,6 +19,7 @@ import { useCart } from "../../hooks/useCart";
 import { theme } from "../../theme/theme";
 import { styles } from "./styles";
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigation } from "../../routes/app.routes";
 
 
 export function Toast() {
@@ -26,7 +27,7 @@ export function Toast() {
     const animation = useSharedValue(0)
 
     const { cart } = useCart()
-    const navigation = useNavigation()
+    const navigation = useNavigation<StackNavigation>()
 
     const { colors } = theme
     const HEIGHT_SIZE = 96
